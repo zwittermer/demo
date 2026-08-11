@@ -1,9 +1,14 @@
 package com.example.demo.responses;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class MyResponse {
+    @JsonIgnore
+    private long id;
+    @JsonProperty("response_message")
     private String message;
     private int status;
-    private long id;
 
     public MyResponse(long id, String message, int status) {
         this.id = id;
