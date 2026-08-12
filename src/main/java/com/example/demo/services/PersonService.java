@@ -30,6 +30,14 @@ public class PersonService {
                 .orElseThrow(() -> new java.util.NoSuchElementException("Person not found with id: " + id));
     }
 
+    public PersonDto createPerson(PersonDto personDto) {
+        Person person = new Person();
+        person.setName(personDto.getName());
+        person.setEmail(personDto.getEmail());
+        Person saved = personRepository.save(person);
+        return toDto(saved);
+    }
+
     private PersonDto toDto(Person person) {
         return new PersonDto(person.getId(), person.getName(), person.getEmail());
     }
