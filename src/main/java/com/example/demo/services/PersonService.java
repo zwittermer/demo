@@ -24,6 +24,12 @@ public class PersonService {
                 .collect(Collectors.toList());
     }
 
+    public PersonDto getPersonById(Long id) {
+        return personRepository.findById(id)
+                .map(this::toDto)
+                .orElseThrow(() -> new java.util.NoSuchElementException("Person not found with id: " + id));
+    }
+
     private PersonDto toDto(Person person) {
         return new PersonDto(person.getId(), person.getName(), person.getEmail());
     }

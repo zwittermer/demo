@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.PersonDto;
@@ -18,5 +19,10 @@ public class PersonController {
     @GetMapping
     public List<PersonDto> getAllPersons() {
         return personService.getAllPersons();
+    }
+
+    @GetMapping("/{id}")
+    public PersonDto getPersonById(@PathVariable Long id) {
+        return personService.getPersonById(id);
     }
 }
