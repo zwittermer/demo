@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import java.util.List;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class PersonController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<PersonDto> createPerson(@RequestBody PersonDto personDto) {
+    public ResponseEntity<PersonDto> createPerson(@Valid @RequestBody PersonDto personDto) {
         PersonDto created = personService.createPerson(personDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
