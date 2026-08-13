@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import java.util.List;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,11 +9,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.PersonDto;
-import com.example.demo.dto.ValidationGroups;
 import com.example.demo.services.PersonService;
 
 @RestController
@@ -34,8 +35,14 @@ public class PersonController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<PersonDto> createPerson(@Validated(ValidationGroups.OnCreate.class) @RequestBody PersonDto personDto) {
+    public ResponseEntity<PersonDto> createPerson(@Valid @RequestBody PersonDto personDto) {
         PersonDto created = personService.createPerson(personDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PersonDto> updatePerson(@PathVariable Long id, @RequestBody PersonDto personDto) {
+        PersonDto updated = personService.updatePerson(id, personDto);
+        return ResponseEntity.ok(updated);
     }
 }

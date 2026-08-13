@@ -1,8 +1,13 @@
 package com.example.demo.services;
 
+import java.beans.FeatureDescriptor;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.PersonDto;
@@ -36,6 +41,35 @@ public class PersonService {
         person.setEmail(personDto.getEmail());
         Person saved = personRepository.save(person);
         return toDto(saved);
+    }
+
+    public PersonDto updatePerson(Long id, PersonDto personDto) {
+        if (personDto.getId() != null && !personDto.getId().equals(id)) {
+            throw new IllegalArgumentException(
+                    "id in request body (" + personDto.getId() + ") does not match id in path (" + id + ")");
+        }
+
+        Person person = personRepository.findById(id)
+                .orElseThrow(() -> new java.util.NoSuchElementException("Person not found with id: " + id));
+
+        BeanUtils.copyProperties(personDto, person, ignoredPropertyNames(personDto, "id"));
+
+        Person saved = personRepository.save(person);
+        return toDto(saved);
+    }
+
+    /**
+     * Returns the set of property names to skip when copying: any property whose
+     * value is null on the source, plus any explicitly ignored names (e.g. "id").
+     */
+    private String[] ignoredPropertyNames(Object source, String... additionalIgnored) {
+        BeanWrapper wrappedSource = new BeanWrapperImpl(source);
+        return Stream.concat(
+                Stream.of(wrappedSource.getPropertyDescriptors())
+                        .map(FeatureDescriptor::getName)
+                        .filter(name -> wrappedSource.getPropertyValue(name) == null),
+                Stream.of(additionalIgnored))
+                .toArray(String[]::new);
     }
 
     private PersonDto toDto(Person person) {
