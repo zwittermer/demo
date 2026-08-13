@@ -58,6 +58,13 @@ public class PersonService {
         return toDto(saved);
     }
 
+    public void deletePerson(Long id) {
+        if (!personRepository.existsById(id)) {
+            throw new java.util.NoSuchElementException("Person not found with id: " + id);
+        }
+        personRepository.deleteById(id);
+    }
+
     /**
      * Returns the set of property names to skip when copying: any property whose
      * value is null on the source, plus any explicitly ignored names (e.g. "id").
