@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.PersonDto;
 import com.example.demo.services.PersonService;
@@ -33,6 +34,11 @@ public class PersonController {
     @GetMapping("/{id}")
     public PersonDto getPersonById(@PathVariable Long id) {
         return personService.getPersonById(id);
+    }
+
+    @GetMapping("/search")
+    public PersonDto getPersonByEmail(@RequestParam String email) {
+        return personService.getPersonByEmail(email);
     }
 
     @PostMapping("/create")

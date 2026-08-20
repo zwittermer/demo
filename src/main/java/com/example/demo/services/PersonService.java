@@ -35,6 +35,13 @@ public class PersonService {
                 .orElseThrow(() -> new java.util.NoSuchElementException("Person not found with id: " + id));
     }
 
+    public PersonDto getPersonByEmail(String email) {
+        System.out.println("Searching for person with email: " + email);
+        return personRepository.findByEmail(email)
+                .map(this::toDto)
+                .orElseThrow(() -> new java.util.NoSuchElementException("Person not found with email: " + email));
+    }
+
     public PersonDto createPerson(PersonDto personDto) {
         Person person = new Person();
         person.setName(personDto.getName());

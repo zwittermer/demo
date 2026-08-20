@@ -32,7 +32,7 @@ public class ControllerResponseAspect {
     @Around("execution(public * com.example.demo.controllers..*.*(..))")
     public Object wrapControllerResponse(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = joinPoint.proceed();
-        String action = joinPoint.getSignature().getName();
+        // String action = joinPoint.getSignature().getName();
 
         return result;
     }
