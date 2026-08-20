@@ -41,6 +41,11 @@ public class PersonController {
         return personService.getPersonByEmail(email);
     }
 
+    @GetMapping("/email-domains")
+    public List<com.example.demo.repositories.PersonRepository.EmailDomainCount> getPersonCountsByEmailDomain() {
+        return personService.getPersonCountsByEmailDomain();
+    }
+
     @PostMapping("/create")
     public ResponseEntity<PersonDto> createPerson(@Valid @RequestBody PersonDto personDto) {
         PersonDto created = personService.createPerson(personDto);

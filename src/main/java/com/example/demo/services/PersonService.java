@@ -42,6 +42,10 @@ public class PersonService {
                 .orElseThrow(() -> new java.util.NoSuchElementException("Person not found with email: " + email));
     }
 
+    public List<PersonRepository.EmailDomainCount> getPersonCountsByEmailDomain() {
+        return personRepository.countPersonsByEmailDomain();
+    }
+
     public PersonDto createPerson(PersonDto personDto) {
         Person person = new Person();
         person.setName(personDto.getName());
