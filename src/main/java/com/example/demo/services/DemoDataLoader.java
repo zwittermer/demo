@@ -14,6 +14,8 @@ public class DemoDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        personRepository.deleteAll();
+
         personRepository.save(new Person(null, "Alice", "alice@example.com"));
         personRepository.save(new Person(null, "Bob", "bob@example.com"));
 
