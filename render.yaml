@@ -3,7 +3,7 @@ services:
     name: demo
     env: java
     plan: free
-    region: oregon
+    region: ohio
     branch: main
     buildCommand: ./mvnw clean package -DskipTests
     startCommand: java -Dserver.port=$PORT -Dspring.profiles.active=prod $JAVA_OPTS -jar target/demo.jar
